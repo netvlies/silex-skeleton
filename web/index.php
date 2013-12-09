@@ -15,9 +15,7 @@ $app = new Silex\Application();
 
 if (isset($_SERVER['SERVER_ADDR']) && $_SERVER['SERVER_ADDR'] == '33.33.33.10') {
     require __DIR__.'/../resources/config/dev.php';
-    die('here');
 } else {
-    die('there');
     require __DIR__.'/../resources/config/prod.php';
 }
 
