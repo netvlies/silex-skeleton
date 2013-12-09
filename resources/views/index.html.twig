@@ -1,5 +1,61 @@
-{% extends "layout.html" %}
+{% extends "layout.html.twig" %}
+
+{% block title %}
+    Welcome to your new Silex Application!
+{% endblock %}
 
 {% block content %}
-    Welcome to the your new Silex Application!
+    <div class="row">
+        <div class="box">
+            <div class="col-lg-12 text-center">
+
+                {% block carousel %}
+                    {% include 'carousel.html.twig' %}
+                {% endblock %}
+
+                <h1><small>Welcome to</small><br><span class="brand-name">Netvlies Silex Sandbox</span><hr class="tagline-divider"><small>By <strong>Start Bootstrap</strong></small></h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="box">
+            <div class="col-lg-12">
+                <hr>
+                <h2 class="intro-text text-center">About <strong>Netvlies Silex Sandbox</strong></h2>
+                <hr>
+            </div>
+            <div class="col-md-6">
+                <img class="img-responsive img-border-left" src="/assets/img/slide-2.jpg">
+            </div>
+            <div class="col-md-6">
+                <p>This is a great place to introduce your company or project and describe what you do.</p>
+                <p>Lid est laborum dolo rumes fugats untras. Etharums ser quidem rerum facilis dolores nemis omnis fugats vitaes nemo minima rerums unsers sadips amets.</p>
+                <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="box">
+            <div class="col-lg-12">
+                <hr>
+                <h2 class="intro-text text-center">Beautiful boxes <strong>to showcase your content</strong></h2>
+                <hr>
+                <p>Use as many boxes as you like, and put anything you want in them! They are great for just about anything, the sky's the limit!</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc placerat diam quis nisl vestibulum dignissim. In hac habitasse platea dictumst. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+{{  parent() }}
+<script>
+    // Activates the Carousel
+    $('.carousel').carousel({
+        interval: 5000
+    })
+</script>
 {% endblock %}
