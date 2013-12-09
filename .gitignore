@@ -1,8 +1,6 @@
 # Symfony default
 composer.phar
 
-/cache/
-/logs/
 /build/
 /vendor/
 
