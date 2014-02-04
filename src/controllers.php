@@ -10,106 +10,61 @@
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Controller Actions
  */
 $app->get('/', function () use ($app) {
     return $app['twig']->render('index.html.twig', array());
-})
-    ->bind('home');
+})->bind('home');
 
 $app->get('/about', function () use ($app) {
-    return $app['twig']->render('about.html.twig', array());
-})
-    ->bind('about');
+    return $app['twig']->render('pages/about.html.twig', array());
+})->bind('about');
 
 $app->get('/news', function () use ($app) {
-    $items = array(
-        array(
-            'title' => 'Wat is de basis?',
-            'date' => 'December 8, 2013',
-            'text' => 'Lid est laborum dolo rumes fugats untras. Etharums ser quidem rerum facilis dolores nemis
-                omnis fugats vitaes nemo minima rerums unsers sadips amets. Sed ut perspiciatis unde omnis iste natus
-                error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo
-                inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.',
-            'img' => false,
-            'detail_link' => 'basis',
-        ),
-        array(
-            'title' => 'Referentie materiaal',
-            'date' => 'Augustus 15, 2013',
-            'text' => 'Lid est laborum dolo rumes fugats untras. Etharums ser quidem rerum facilis dolores nemis
-                omnis fugats vitaes nemo minima rerums unsers sadips amets. Sed ut perspiciatis unde omnis iste natus
-                error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo
-                inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.',
-            'img' => false,
-            'detail_link' => 'referentie',
-        ),
-        array(
-            'title' => 'Waarom een zandbak?',
-            'date' => 'Juni 23, 2013',
-            'text' => 'Lid est laborum dolo rumes fugats untras. Etharums ser quidem rerum facilis dolores nemis
-                omnis fugats vitaes nemo minima rerums unsers sadips amets. Sed ut perspiciatis unde omnis iste natus
-                error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo
-                inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.',
-            'img' => false,
-            'detail_link' => 'zandbak',
-        ),
-    );
-    return $app['twig']->render('news.html.twig', array('items' => $items));
-})
-    ->bind('news');
+    $articles = $app['db']->fetchAll('SELECT * FROM article');
+    return $app['twig']->render('pages/news.html.twig', array('articles' => $articles));
+})->bind('news');
 
-$app->get('/news/{slug}', function ($slug) use ($app) {
-    if($slug == 'basis'){
-        $items = array(
-            array(
-                'title' => 'Wat is de basis?',
-                'date' => 'December 8, 2013',
-                'text' => 'Lid est laborum dolo rumes fugats untras. Etharums ser quidem rerum facilis dolores nemis
-                    omnis fugats vitaes nemo minima rerums unsers sadips amets. Sed ut perspiciatis unde omnis iste natus
-                    error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo
-                    inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.',
-                'img' => 'slide-1.jpg',
-                'detail_link' => false,
-            )
-        );
-    } elseif($slug == 'referentie'){
-        $items = array(
-            array(
-                'title' => 'Referentie materiaal',
-                'date' => 'Augustus 15, 2013',
-                'text' => 'Lid est laborum dolo rumes fugats untras. Etharums ser quidem rerum facilis dolores nemis
-                    omnis fugats vitaes nemo minima rerums unsers sadips amets. Sed ut perspiciatis unde omnis iste natus
-                    error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo
-                    inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.',
-                'img' => 'slide-2.jpg',
-                'detail_link' => false,
-                )
-            );
-    } else {
-        $items = array(
-            array(
-                'title' => 'Waarom een zandbak?',
-                'date' => 'Juni 23, 2013',
-                'text' => 'Lid est laborum dolo rumes fugats untras. Etharums ser quidem rerum facilis dolores nemis
-                    omnis fugats vitaes nemo minima rerums unsers sadips amets. Sed ut perspiciatis unde omnis iste natus
-                    error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo
-                    inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.',
-                'img' => 'slide-3.jpg',
-                'detail_link' => false,
-            )
-        );
+$app->get('/news/{id}', function ($id) use ($app) {
+    $sql = "SELECT * FROM article WHERE id = ?";
+    $article = $app['db']->fetchAssoc($sql, array((int) $id));
+    return $app['twig']->render('pages/news.html.twig', array('articles' => array($article)));
+})->bind('news_detail');
+
+$app->match('/contact', function (Request $request) use ($app) {
+    /** @var Symfony\Component\Form\Form $form */
+    $form = $app['form.factory']->createBuilder('form')
+        ->add('name', 'text', array(
+            'constraints' => array(new Assert\NotBlank(), new Assert\Length(array('min' => 5))),
+            'attr' => array('class' => 'form-control')
+        ))
+        ->add('email', 'text', array(
+            'constraints' => array(new Assert\NotBlank(), new Assert\Email()),
+            'attr' => array('class' => 'form-control')
+        ))
+        ->add('message', 'textarea', array(
+            'constraints' => array(new Assert\NotBlank(), new Assert\Length(array('min' => 5))),
+            'attr' => array('class' => 'form-control', 'rows' => 6)
+        ))
+        ->getForm();
+
+    $form->handleRequest($request);
+
+    if ($form->isValid()) {
+        $data = $form->getData();
+        $dt = new DateTime();
+        $data['created'] = $dt->format('Y-m-d H:i:s');
+
+        $app['db']->insert('contact', $data);
+
+        return $app['twig']->render('pages/contact.html.twig', array('submitted' => true));
     }
-    return $app['twig']->render('news.html.twig', array('items' => $items));
-})
-    ->bind('news_detail');
 
-$app->get('/contact', function () use ($app) {
-    return $app['twig']->render('contact.html.twig', array());
-})
-    ->bind('contact');
+    return $app['twig']->render('pages/contact.html.twig', array('form' => $form->createView()));
+})->bind('contact');
 
 /**
  * Error Handler

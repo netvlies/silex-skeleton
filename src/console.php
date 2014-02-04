@@ -8,10 +8,12 @@
 * file that was distributed with this source code.
 */
 
+use Doctrine\DBAL\DriverManager;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
 $console = new Application('Netvlies Silex Skeleton', '0.1');
@@ -54,6 +56,48 @@ $console
 
         foreach ($schema->toSql($app['db']->getDatabasePlatform()) as $sql) {
             $app['db']->exec($sql.';');
+        }
+    })
+;
+
+$console
+    ->register('doctrine:fixtures:load')
+    ->setDescription('Load fixtures')
+    ->setCode(function (InputInterface $input, OutputInterface $output) use ($app) {
+
+        $articles = array(
+            array(
+                'title' => 'Wat is de basis?',
+                'created' => '2014-02-02 18:30:45',
+                'content' => 'Lid est laborum dolo rumes fugats untras. Etharums ser quidem rerum facilis dolores nemis
+                omnis fugats vitaes nemo minima rerums unsers sadips amets. Sed ut perspiciatis unde omnis iste natus
+                error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo
+                inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.',
+                'img' => 'slide-1.jpg'
+            ),
+            array(
+                'title' => 'Referentie materiaal',
+                'created' => '2014-02-01 13:10:05',
+                'content' => 'Lid est laborum dolo rumes fugats untras. Etharums ser quidem rerum facilis dolores nemis
+                omnis fugats vitaes nemo minima rerums unsers sadips amets. Sed ut perspiciatis unde omnis iste natus
+                error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo
+                inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.',
+                'img' => 'slide-2.jpg'
+            ),
+            array(
+                'title' => 'Waarom een zandbak?',
+                'created' => '2014-01-31 09:41:23',
+                'content' => 'Lid est laborum dolo rumes fugats untras. Etharums ser quidem rerum facilis dolores nemis
+                omnis fugats vitaes nemo minima rerums unsers sadips amets. Sed ut perspiciatis unde omnis iste natus
+                error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo
+                inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.',
+                'img' => 'slide-3.jpg'
+            ),
+        );
+
+        foreach ($articles as $article) {
+            $output->writeln(sprintf('<info>Inserting Article - <comment>%s</comment></info>', $article['title']));
+            $app['db']->insert('article', $article);
         }
     })
 ;

@@ -13,18 +13,15 @@
                 <hr>
             </div>
 
-            {% for item in items %}
+            {% for article in articles %}
                 <div class="col-lg-12 text-center">
-                    {% if item.img %}
-                        <img class="img-responsive img-border img-full" src="/assets/img/{{ item.img }}">
+                    {% if article.img %}
+                        <img class="img-responsive img-border img-full" src="/assets/img/{{ article.img }}">
                     {% endif %}
 
-                    <h2>{{ item.title }}<br><small>{{ item.date }}</small></h2>
-                    <p>{{ item.text }}</p>
-
-                    {% if item.detail_link %}
-                        <a href="/news/{{ item.detail_link }}" class="btn btn-default btn-lg">Lees Meer</a>
-                    {% endif %}
+                    <h2>{{ article.title }}<br><small>{{ article.created | date('F j, Y') }}</small></h2>
+                    <p>{{ article.content }}</p>
+                    <a href="/news/{{ article.id }}" class="btn btn-default btn-lg">Lees Meer</a>
                     <hr>
                 </div>
             {% endfor %}
@@ -39,8 +36,8 @@
 
             <div class="col-lg-12 text-center">
                 <ul class="pager">
-                    <li class="previous"><a href="#">&larr; Older</a></li>
-                    <li class="next"><a href="#">Newer &rarr;</a></li>
+                    <li class="previous"><a href="#">&larr; Ouder</a></li>
+                    <li class="next"><a href="#">Nieuwer &rarr;</a></li>
                 </ul>
             </div>
         </div>
