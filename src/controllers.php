@@ -36,12 +36,10 @@ $app->get('/news/{id}', function ($id) use ($app) {
     if($previous){
         $params['previous'] = $previous;
     }
-
     $next = $app['db']->fetchColumn("SELECT id FROM article WHERE id > ? ORDER BY id ASC LIMIT 1", array((int) $id));
     if($next){
         $params['next'] = $next;
     }
-
 
     return $app['twig']->render('pages/news.html.twig', $params);
 })->bind('news_detail');
