@@ -2,6 +2,16 @@
 
 {% block title %}Contact{% endblock %}
 
+{% form_theme form _self %}
+
+{% block form_errors %}
+    {% spaceless %}
+        {% if errors|length > 0 %}
+            <span class="help-inline" style="color:#d2322d">{% for error in errors %}{{ error.message }} {% endfor %}</span>
+        {% endif %}
+    {% endspaceless %}
+{% endblock form_errors %}
+
 {% block content %}
     <div class="row">
         <div class="box">
@@ -42,7 +52,7 @@
                                 {{ form_errors(form.name) }}
                             </div>
                             <div class="form-group col-lg-4">
-                                <label>Email Address</label>
+                                <label>Email Adres</label>
                                 {{ form_widget(form.email) }}
                                 {{ form_errors(form.email) }}
                             </div>

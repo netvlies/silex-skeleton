@@ -29,9 +29,21 @@ $app->get('/news', function () use ($app) {
 })->bind('news');
 
 $app->get('/news/{id}', function ($id) use ($app) {
-    $sql = "SELECT * FROM article WHERE id = ?";
-    $article = $app['db']->fetchAssoc($sql, array((int) $id));
-    return $app['twig']->render('pages/news.html.twig', array('articles' => array($article)));
+    $article = $app['db']->fetchAssoc("SELECT * FROM article WHERE id = ?", array((int) $id));
+    $params = array('articles' => array($article), 'detail' => true);
+
+    $previous = $app['db']->fetchColumn("SELECT id FROM article WHERE id < ? ORDER BY id DESC LIMIT 1", array((int) $id));
+    if($previous){
+        $params['previous'] = $previous;
+    }
+
+    $next = $app['db']->fetchColumn("SELECT id FROM article WHERE id > ? ORDER BY id ASC LIMIT 1", array((int) $id));
+    if($next){
+        $params['next'] = $next;
+    }
+
+
+    return $app['twig']->render('pages/news.html.twig', $params);
 })->bind('news_detail');
 
 $app->match('/contact', function (Request $request) use ($app) {
