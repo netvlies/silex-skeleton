@@ -1,9 +1,5 @@
 {% extends "layout.html.twig" %}
 
-{% block title %}
-    Welcome to your new Silex Application!
-{% endblock %}
-
 {% block content %}
     <div class="row">
         <div class="box">
@@ -13,7 +9,7 @@
                     {% include 'blocks/carousel.html.twig' %}
                 {% endblock %}
 
-                <h1><small>Welcome to</small><br><span class="brand-name">Netvlies Silex Sandbox</span><hr class="tagline-divider"><small>By <strong>Start Bootstrap</strong></small></h1>
+                <h1><small>{{ 'Welcome'|trans }}</small><br><span class="brand-name">{{ 'SiteName'|trans }}</span><hr class="tagline-divider"><small>{{ 'By'|trans }} <strong>{{ 'Author'|trans }}</strong></small></h1>
             </div>
         </div>
     </div>
@@ -22,7 +18,7 @@
         <div class="box">
             <div class="col-lg-12">
                 <hr>
-                <h2 class="intro-text text-center">About <strong>Netvlies Silex Sandbox</strong></h2>
+                <h2 class="intro-text text-center">{{ 'About'|trans }} <strong>{{ 'SiteName'|trans }}</strong></h2>
                 <hr>
             </div>
             <div class="col-md-6">
@@ -41,6 +37,22 @@
         <div class="box">
             <div class="col-lg-12">
                 <hr>
+                <h2 class="intro-text text-center">Build a website <strong>worth visiting</strong></h2>
+                <hr>
+                <img class="img-responsive img-border img-left" src="/assets/img/slide-3.jpg">
+                <hr class="visible-xs">
+                <p>&nbsp;</p>
+                <p>The boxes used in this template are nested inbetween a normal Bootstrap row and the start of your column layout. The boxes will be full-width boxes, so if you want to make them smaller then you will need to customize.</p>
+                <p>A huge thanks to <a href="http://join.deathtothestockphoto.com/" target="_blank">Death to the Stock Photo</a> for allowing us to use the beautiful photos that make this template really come to life. When using this template, make sure your photos are decent. Also make sure that the file size on your photos is kept to a minumum to keep load times to a minimum.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc placerat diam quis nisl vestibulum dignissim. In hac habitasse platea dictumst. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="box">
+            <div class="col-lg-12">
+                <hr>
                 <h2 class="intro-text text-center">Beautiful boxes <strong>to showcase your content</strong></h2>
                 <hr>
                 <p>Use as many boxes as you like, and put anything you want in them! They are great for just about anything, the sky's the limit!</p>
@@ -48,14 +60,4 @@
             </div>
         </div>
     </div>
-{% endblock %}
-
-{% block javascripts %}
-{{  parent() }}
-<script>
-    // Activates the Carousel
-    $('.carousel').carousel({
-        interval: 5000
-    })
-</script>
 {% endblock %}

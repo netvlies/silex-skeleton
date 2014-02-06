@@ -1,127 +1,71 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
+<html lang="nl">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="{{ 'Author'|trans }}">
 
-    <title>{{ 'Homepage'|trans }}</title>
+        {% block title %}
+            <title>{{ 'SiteName'|trans }}</title>
+        {% endblock %}
 
-    <!-- Bootstrap core CSS -->
-    <link href="/assets/css/bootstrap.css" rel="stylesheet">
+        <!-- Bootstrap core CSS -->
+        <link href="/assets/css/bootstrap.css" rel="stylesheet">
 
-    <!-- Add custom CSS here -->
-    <link href="/assets/css/style.css" rel="stylesheet">
-</head>
+        <!-- Add custom CSS here -->
+        <link href="/assets/css/style.css" rel="stylesheet">
+    </head>
 
-<body>
+    <body>
 
-<div class="brand">Netvlies Silex Sandbox</div>
-<div class="address-bar">Netvlies | Prinsenkade 7 | 4800 DW | Breda | 076-5302525</div>
+    <div class="brand">{{ 'SiteName'|trans }}</div>
+    <div class="address-bar">Netvlies | Prinsenkade 8 | 4800 DW | Breda | 076-5302525</div>
 
-<nav class="navbar navbar-default" role="navigation">
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Menu</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">{{ 'SiteName'|trans }}</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="/">{{ 'Home'|trans }}</a></li>
+                    <li><a href="/about">{{ 'About'|trans }}</a></li>
+                    <li><a href="/news">{{ 'News'|trans }}</a></li>
+                    <li><a href="/contact">{{ 'Contact'|trans }}</a></li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container -->
+    </nav>
+
     <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                <span class="sr-only">Menu</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/">Netvlies Silex Sandbox</a>
-        </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse navbar-ex1-collapse">
-            <ul class="nav navbar-nav">
-                <li><a href="/">Home</a></li>
-                <li><a href="/about">About</a></li>
-                <li><a href="/news">News</a></li>
-                <li><a href="/contact">Contact</a></li>
-            </ul>
-        </div><!-- /.navbar-collapse -->
+        {% block content %}
+        {% endblock %}
     </div><!-- /.container -->
-</nav>
 
-<div class="container">
-    {% block content %}
-        <div class="row">
-            <div class="box">
+    <footer>
+        <div class="container">
+            <div class="row">
                 <div class="col-lg-12 text-center">
-
-                    {% block carousel %}
-                        {% include 'carousel.html.twig' %}
-                    {% endblock %}
-
-                    <h1><small>Welcome to</small><br><span class="brand-name">Netvlies Silex Sandbox</span><hr class="tagline-divider"><small>By <strong>Start Bootstrap</strong></small></h1>
+                    <p>Copyright &copy; {{ 'Author'|trans }} 2014</p>
                 </div>
             </div>
         </div>
+    </footer>
 
-        <div class="row">
-            <div class="box">
-                <div class="col-lg-12">
-                    <hr>
-                    <h2 class="intro-text text-center">About <strong>Netvlies Silex Sandbox</strong></h2>
-                    <hr>
-                </div>
-                <div class="col-md-6">
-                    <img class="img-responsive img-border-left" src="/assets/img/slide-2.jpg">
-                </div>
-                <div class="col-md-6">
-                    <p>This is a great place to introduce your company or project and describe what you do.</p>
-                    <p>Lid est laborum dolo rumes fugats untras. Etharums ser quidem rerum facilis dolores nemis omnis fugats vitaes nemo minima rerums unsers sadips amets.</p>
-                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
-                </div>
-                <div class="clearfix"></div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="box">
-                <div class="col-lg-12">
-                    <hr>
-                    <h2 class="intro-text text-center">Build a website <strong>worth visiting</strong></h2>
-                    <hr>
-                    <img class="img-responsive img-border img-left" src="/assets/img/slide-3.jpg">
-                    <hr class="visible-xs">
-                    <p>The boxes used in this template are nested inbetween a normal Bootstrap row and the start of your column layout. The boxes will be full-width boxes, so if you want to make them smaller then you will need to customize.</p>
-                    <p>A huge thanks to <a href="http://join.deathtothestockphoto.com/" target="_blank">Death to the Stock Photo</a> for allowing us to use the beautiful photos that make this template really come to life. When using this template, make sure your photos are decent. Also make sure that the file size on your photos is kept to a minumum to keep load times to a minimum.</p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc placerat diam quis nisl vestibulum dignissim. In hac habitasse platea dictumst. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="box">
-                <div class="col-lg-12">
-                    <hr>
-                    <h2 class="intro-text text-center">Beautiful boxes <strong>to showcase your content</strong></h2>
-                    <hr>
-                    <p>Use as many boxes as you like, and put anything you want in them! They are great for just about anything, the sky's the limit!</p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc placerat diam quis nisl vestibulum dignissim. In hac habitasse platea dictumst. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
-                </div>
-            </div>
-        </div>
-    {% endblock %}
-</div><!-- /.container -->
-
-<footer>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12 text-center">
-                <p>Copyright &copy; Netvlies Internetdiensten 2014</p>
-            </div>
-        </div>
-    </div>
-</footer>
-
-<!-- JavaScript -->
-<script src="/assets/js/jquery-1.10.2.js"></script>
-<script src="/assets/js/bootstrap.js"></script>
-{% block javascripts %}{% endblock %}
+    <!-- JavaScript -->
+    <script src="/assets/js/jquery-1.10.2.js"></script>
+    <script src="/assets/js/bootstrap.js"></script>
+    {% block javascripts %}{% endblock %}
 
 
-</body>
+    </body>
 </html>
